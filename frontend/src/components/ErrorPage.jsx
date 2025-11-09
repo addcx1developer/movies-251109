@@ -5,7 +5,7 @@ function ErrorPage() {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="container text-center p-4">
+      <div className="container text-center py-4">
         <h1 className="text-2xl">Oops!</h1>
         <p>Sorry, an unexpected error has occurred.</p>
         <p>
