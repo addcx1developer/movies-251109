@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
 
 import Alert from "./components/Alert";
 
@@ -9,6 +9,12 @@ function App() {
     message: "",
     className: "hidden",
   });
+  const navigate = useNavigate();
+
+  const logout = () => {
+    setJwtToken("");
+    navigate("/login");
+  };
 
   return (
     <div className="flex justify-center">
@@ -23,12 +29,12 @@ function App() {
               Login
             </Link>
           ) : (
-            <a
-              href="#!"
+            <button
               className="bg-red-700 hover:bg-red-600 text-white text-xs rounded-sm p-1 cursor-pointer tansition duration-300 ease-in-out"
+              onClick={logout}
             >
               Logout
-            </a>
+            </button>
           )}
         </header>
 
@@ -91,7 +97,7 @@ function App() {
           </nav>
           <main className="col-span-2">
             <Alert {...alert} />
-            <Outlet context={{ jwtToken, setJwtToken, setAlert }} />
+            <Outlet context={{ jwtToken, setJwtToken, setAlert, logout }} />
           </main>
         </div>
       </div>
