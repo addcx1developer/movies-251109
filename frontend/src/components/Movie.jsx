@@ -23,7 +23,8 @@ function Movie() {
         <span>Movie: {movie.title}</span>
         <small className="text-xs">
           <em>
-            {movie.release_date}, {movie.runtime} minutes, Rated {movie.mpaa_rating}
+            {movie.release_date}, {movie.runtime} minutes, Rated{" "}
+            {movie.mpaa_rating}
           </em>
         </small>
       </h2>

@@ -29,7 +29,9 @@ function Movies() {
 
   return (
     <div>
-      <h2 className="text-lg font-bold border-b border-gray-300 py-2">Movies</h2>
+      <h2 className="text-lg font-bold border-b border-gray-300 py-2">
+        Movies
+      </h2>
       <table className="min-w-full text-left border-collapse">
         <thead>
           <tr className="border-b bg-gray-100">

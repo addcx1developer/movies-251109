@@ -1,7 +1,9 @@
 function Genres() {
   return (
     <div>
-      <h2 className="text-lg font-bold border-b border-gray-300 py-2">Genres</h2>
+      <h2 className="text-lg font-bold border-b border-gray-300 py-2">
+        Genres
+      </h2>
     </div>
   );
 }
