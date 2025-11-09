@@ -3,7 +3,7 @@ import { Link, Outlet } from "react-router";
 import { useState } from "react";
 
 function App() {
-  const [jwtToken, setJwtToken] = useState("");
+  const [jwtToken] = useState("");
 
   return (
     <div className="flex justify-center">
