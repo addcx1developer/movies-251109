@@ -13,7 +13,7 @@ function Movies() {
       headers,
     };
 
-    fetch(`http://localhost:8080/movies`, requestOptions)
+    fetch(`api/movies`, requestOptions)
       .then((response) => response.json())
       .then((data) => setMovies(data))
       .catch((err) => console.log(err));
