@@ -1,3 +1,5 @@
+import { Outlet } from "react-router";
+
 import Home from "./components/Home";
 
 function App() {
@@ -16,7 +18,7 @@ function App() {
             <ul className="font-semibold border border-gray-300 rounded-md overflow-hidden divide-y divide-gray-300">
               <li>
                 <a
-                  href="#!"
+                  href="/"
                   className="block p-2 bg-white hover:bg-gray-200 transition duration-300 ease-in-out"
                 >
                   Home
@@ -24,7 +26,7 @@ function App() {
               </li>
               <li>
                 <a
-                  href="#!"
+                  href="/movies"
                   className="block p-2 bg-white hover:bg-gray-200 transition duration-300 ease-in-out"
                 >
                   Movies
@@ -65,7 +67,7 @@ function App() {
             </ul>
           </nav>
           <main className="col-span-2">
-            <Home />
+            <Outlet />
           </main>
         </div>
       </div>
