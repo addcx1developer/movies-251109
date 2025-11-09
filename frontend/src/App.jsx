@@ -1,9 +1,14 @@
+import { useState } from "react";
 import { Link, Outlet } from "react-router";
 
-import { useState } from "react";
+import Alert from "./components/Alert";
 
 function App() {
   const [jwtToken, setJwtToken] = useState("");
+  const [alert, setAlert] = useState({
+    message: "",
+    className: "hidden",
+  });
 
   return (
     <div className="flex justify-center">
@@ -85,7 +90,8 @@ function App() {
             </ul>
           </nav>
           <main className="col-span-2">
-            <Outlet context={{ jwtToken, setJwtToken }} />
+            <Alert {...alert} />
+            <Outlet context={{ jwtToken, setJwtToken, setAlert }} />
           </main>
         </div>
       </div>
