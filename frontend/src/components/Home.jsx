@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 import Ticket from "../images/movie_tickets.jpg";
 
 function Home() {
@@ -7,7 +9,9 @@ function Home() {
         Find a movie to watch tonight!
       </h2>
       <div className="flex justify-center p-2">
-        <img src={Ticket} alt="movie tickets" />
+        <Link to="/movies">
+          <img src={Ticket} alt="movie tickets" />
+        </Link>
       </div>
     </div>
   );

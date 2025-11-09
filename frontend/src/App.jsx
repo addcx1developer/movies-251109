@@ -1,4 +1,4 @@
-import { Outlet } from "react-router";
+import { Link, Outlet } from "react-router";
 
 import Home from "./components/Home";
 
@@ -8,61 +8,64 @@ function App() {
       <div className="container space-y-4">
         <header className="flex justify-between items-center py-4 border border-transparent border-b-gray-300">
           <h1 className="text-xl font-bold">Go Watch a Movie!</h1>
-          <button className="bg-green-700 hover:bg-green-600 text-white text-xs rounded-sm p-1 cursor-pointer transition duration-300 ease-in-out">
+          <Link
+            to="/login"
+            className="bg-green-700 hover:bg-green-600 text-white text-xs rounded-sm p-1 cursor-pointer transition duration-300 ease-in-out"
+          >
             Login
-          </button>
+          </Link>
         </header>
 
         <div className="grid grid-cols-3 gap-4">
           <nav>
             <ul className="font-semibold border border-gray-300 rounded-md overflow-hidden divide-y divide-gray-300">
               <li>
-                <a
-                  href="/"
+                <Link
+                  to="/"
                   className="block p-2 bg-white hover:bg-gray-200 transition duration-300 ease-in-out"
                 >
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/movies"
+                <Link
+                  to="/movies"
                   className="block p-2 bg-white hover:bg-gray-200 transition duration-300 ease-in-out"
                 >
                   Movies
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#!"
+                <Link
+                  to="/genres"
                   className="block p-2 bg-white hover:bg-gray-200 transition duration-300 ease-in-out"
                 >
                   Genres
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#!"
+                <Link
+                  to="/admin/movie/0"
                   className="block p-2 bg-white hover:bg-gray-200 transition duration-300 ease-in-out"
                 >
                   Add Movie
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#!"
+                <Link
+                  to="/manage-catalogue"
                   className="block p-2 bg-white hover:bg-gray-200 transition duration-300 ease-in-out"
                 >
                   Manage Catalogue
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#!"
+                <Link
+                  to="/graphql"
                   className="block p-2 bg-white hover:bg-gray-200 transition duration-300 ease-in-out"
                 >
                   GraphQL
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>
