@@ -3,7 +3,7 @@ import { Link, Outlet } from "react-router";
 import { useState } from "react";
 
 function App() {
-  const [jwtToken] = useState("");
+  const [jwtToken, setJwtToken] = useState("");
 
   return (
     <div className="flex justify-center">
@@ -85,7 +85,7 @@ function App() {
             </ul>
           </nav>
           <main className="col-span-2">
-            <Outlet />
+            <Outlet context={{ jwtToken, setJwtToken }} />
           </main>
         </div>
       </div>
