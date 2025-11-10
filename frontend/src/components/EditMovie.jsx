@@ -60,7 +60,7 @@ function EditMovie() {
         Add/Edit Movie
       </h2>
       <pre>{JSON.stringify(movie, null, 3)}</pre>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="space-y-2">
         <input type="hidden" id="id" name="id" value={movie.id} />
         <Input
           type="text"
@@ -110,6 +110,8 @@ function EditMovie() {
           errorDiv={hasError("description") ? "text-red-800" : "hidden"}
           errorMsg="Please enter a description"
         />
+        <hr className="border-gray-300" />
+        <h3>Genres</h3>
       </form>
     </div>
   );

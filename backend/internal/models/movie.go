@@ -10,6 +10,16 @@ type Movie struct {
 	MPAARating  string    `json:"mpaa_rating"`
 	Description string    `json:"description"`
 	Image       string    `json:"image"`
+	Genres      []*Genre  `json:"genres,omitempty"`
+	GenresArray []int     `json:"genres_array,omitempty"`
 	CreatedAt   time.Time `json:"-"`
 	UpdatedAt   time.Time `json:"-"`
+}
+
+type Genre struct {
+	ID        int       `json:"id"`
+	Genre     string    `json:"genre"`
+	Check     bool      `json:"check"`
+	CreatedAt time.Time `json:"-"`
+	UpdatedAt time.Time `json:"-"`
 }
