@@ -2,8 +2,18 @@ import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router";
 
 import Input from "./form/Input";
+import Select from "./form/Select";
+import TextArea from "./form/TextArea";
 
 function EditMovie() {
+  const MPAA_OPTIONS = [
+    { id: "G", value: "G" },
+    { id: "PG", value: "PG" },
+    { id: "PG-13", value: "PG-13" },
+    { id: "R", value: "R" },
+    { id: "NC17", value: "NC17" },
+    { id: "18A", value: "18A" },
+  ];
   const navigate = useNavigate();
   const { jwtToken } = useOutletContext();
   const { id } = useParams();
@@ -61,6 +71,44 @@ function EditMovie() {
           onChange={handleChange}
           errorDiv={hasError("title") ? "text-red-800" : "hidden"}
           errorMsg="Please enter a title"
+        />
+        <Input
+          type="date"
+          name="release_date"
+          title="Release Date"
+          className="text-sm border border-gray-300 rounded-sm p-1"
+          value={movie.release_date}
+          onChange={handleChange}
+          errorDiv={hasError("release_date") ? "text-red-800" : "hidden"}
+          errorMsg="Please enter a release date"
+        />
+        <Input
+          type="text"
+          name="runtime"
+          title="Runtime"
+          className="text-sm border border-gray-300 rounded-sm p-1"
+          value={movie.runtime}
+          onChange={handleChange}
+          errorDiv={hasError("runtime") ? "text-red-800" : "hidden"}
+          errorMsg="Please enter a runtime"
+        />
+        <Select
+          name="mpaa_rating"
+          title="MPAA Rating"
+          options={MPAA_OPTIONS}
+          onChange={handleChange}
+          placeHolder="Choose..."
+          errorDiv={hasError("mpaa_rating") ? "text-red-800" : "hidden"}
+          errorMsg="Please choose"
+        />
+        <TextArea
+          name="description"
+          title="Description"
+          rows="3"
+          value={movie.description}
+          onChange={handleChange}
+          errorDiv={hasError("description") ? "text-red-800" : "hidden"}
+          errorMsg="Please enter a description"
         />
       </form>
     </div>
