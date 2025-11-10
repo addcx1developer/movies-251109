@@ -8,7 +8,7 @@ function Login() {
     email: "",
     password: "",
   });
-  const { setJwtToken, setAlert } = useOutletContext();
+  const { setJwtToken, setAlert, toggleRefresh } = useOutletContext();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -41,6 +41,7 @@ function Login() {
 
         setJwtToken(data.access_token);
         setAlert({ message: "", className: "hidden" });
+        toggleRefresh(true);
         navigate("/");
       })
       .catch((error) => {

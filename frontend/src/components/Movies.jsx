@@ -13,7 +13,7 @@ function Movies() {
       headers,
     };
 
-    fetch(`api/movies`, requestOptions)
+    fetch(`/api/movies`, requestOptions)
       .then((response) => response.json())
       .then((data) => setMovies(data))
       .catch((err) => console.log(err));

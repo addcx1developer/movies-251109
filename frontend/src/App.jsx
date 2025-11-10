@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router";
 
 import Alert from "./components/Alert";
@@ -9,12 +9,77 @@ function App() {
     message: "",
     className: "hidden",
   });
+  const [tickInterval, setTickInterval] = useState();
   const navigate = useNavigate();
 
   const logout = () => {
-    setJwtToken("");
+    const requestOptions = {
+      method: "GET",
+      credentials: "include",
+    };
+
+    fetch(`/api/logout`, requestOptions)
+      .catch((error) => console.log("error logging out", error))
+      .finally(() => {
+        setJwtToken("");
+        toggleRefresh(false);
+      });
     navigate("/login");
   };
+
+  const toggleRefresh = useCallback(
+    (status) => {
+      console.log("clicked");
+
+      if (!status) {
+        console.log("turning off ticking");
+        console.log("turning off tickInterval", tickInterval);
+        setTickInterval(null);
+        clearInterval(tickInterval);
+        return;
+      }
+
+      console.log("turning on ticking");
+      let i = setInterval(() => {
+        const requestOptions = {
+          method: "GET",
+          credentials: "include",
+        };
+
+        fetch(`/api/refresh`, requestOptions)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.access_token) {
+              setJwtToken(data.access_token);
+            }
+          })
+          .catch(() => console.log("user is not logged in"));
+      }, 600000);
+      setTickInterval(i);
+      console.log("setting tick interval to", i);
+      return;
+    },
+    [tickInterval],
+  );
+
+  useEffect(() => {
+    if (jwtToken.trim() === "") {
+      const requestOptions = {
+        method: "GET",
+        credentials: "include",
+      };
+
+      fetch(`/api/refresh`, requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.access_token) {
+            setJwtToken(data.access_token);
+            toggleRefresh(true);
+          }
+        })
+        .catch((error) => console.log("user is not logged in", error));
+    }
+  }, [jwtToken, toggleRefresh]);
 
   return (
     <div className="flex justify-center">
@@ -97,7 +162,15 @@ function App() {
           </nav>
           <main className="col-span-2">
             <Alert {...alert} />
-            <Outlet context={{ jwtToken, setJwtToken, setAlert, logout }} />
+            <Outlet
+              context={{
+                jwtToken,
+                setJwtToken,
+                setAlert,
+                logout,
+                toggleRefresh,
+              }}
+            />
           </main>
         </div>
       </div>
