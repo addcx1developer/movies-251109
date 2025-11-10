@@ -35,7 +35,7 @@ function EditMovie() {
     e.preventDefault();
   };
 
-  const handleChange = () => (e) => {
+  const handleChange = (e) => {
     let value = e.target.value;
     let name = e.target.name;
     setMovie((pv) => ({
@@ -58,7 +58,7 @@ function EditMovie() {
           title="Title"
           className="text-sm border border-gray-300 rounded-sm p-1"
           value={movie.title}
-          onChange={handleChange("title")}
+          onChange={handleChange}
           errorDiv={hasError("title") ? "text-red-800" : "hidden"}
           errorMsg="Please enter a title"
         />
