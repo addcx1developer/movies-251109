@@ -60,7 +60,7 @@ function EditMovie() {
         Add/Edit Movie
       </h2>
       <pre>{JSON.stringify(movie, null, 3)}</pre>
-      <form onSubmit={handleSubmit} className="space-y-2">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <input type="hidden" id="id" name="id" value={movie.id} />
         <Input
           type="text"
