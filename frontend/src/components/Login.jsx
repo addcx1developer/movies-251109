@@ -14,17 +14,41 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (userInput.email !== "admin@example.com") {
-      setAlert({
-        message: "Invalid credentials",
-        className: "bg-red-50 border border-red-200 text-red-800",
-      });
-      return;
-    }
+    let payload = {
+      email: userInput.email,
+      password: userInput.password,
+    };
 
-    setJwtToken("abc");
-    setAlert({ message: "", className: "hidden" });
-    navigate("/");
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(payload),
+    };
+
+    fetch(`/api/authenticate`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          setAlert({
+            message: data.message,
+            className: "bg-red-50 border border-red-200 text-red-800",
+          });
+          return;
+        }
+
+        setJwtToken(data.access_token);
+        setAlert({ message: "", className: "hidden" });
+        navigate("/");
+      })
+      .catch((error) => {
+        setAlert({
+          message: error,
+          className: "bg-red-50 border border-red-200 text-red-800",
+        });
+      });
   };
 
   return (
