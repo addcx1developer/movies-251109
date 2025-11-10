@@ -7,16 +7,19 @@ function Movie() {
 
   useEffect(() => {
     const headers = new Headers();
-    headers.append("Content-Type", "application/json")
+    headers.append("Content-Type", "application/json");
 
     const requestOptions = {
       method: "GET",
       headers,
-    }
+    };
 
-    fetch(`/api/movies/${id}`, requestOptions).then((response) => response.json()).then((data) => {
-      setMovie(data);
-    }).catch((err) => console.log(err))
+    fetch(`/api/movies/${id}`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        setMovie(data);
+      })
+      .catch((err) => console.log(err));
   }, [id]);
 
   return (
@@ -31,14 +34,20 @@ function Movie() {
         </small>
         <div className="space-x-2">
           {movie.genres?.map((g) => (
-            <span key={g.genre} className="bg-gray-700 hover:bg-gray-600 text-white text-xs rounded-full p-1 cursor-pointer tansition duration-300 ease-in-out">
+            <span
+              key={g.genre}
+              className="bg-gray-700 text-white text-xs rounded-md p-1"
+            >
               {g.genre}
             </span>
           ))}
         </div>
       </div>
       {movie.image?.trim() !== "" && (
-        <img src={`https://image.tmdb.org/t/p/w200/${movie.image}`} alt="poster" />
+        <img
+          src={`https://image.tmdb.org/t/p/w200/${movie.image}`}
+          alt="poster"
+        />
       )}
       <p>{movie.description}</p>
     </div>

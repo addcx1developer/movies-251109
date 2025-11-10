@@ -27,7 +27,7 @@ function EditMovie() {
   });
   const [formErrors, setFormErrors] = useState({
     general: null,
-    fields: []
+    fields: [],
   });
 
   useEffect(() => {
@@ -39,8 +39,8 @@ function EditMovie() {
 
   const hasError = (key) => {
     return formErrors.fields.indexOf(key) !== -1;
-  }
-  
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -51,8 +51,8 @@ function EditMovie() {
     setMovie((pv) => ({
       ...pv,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   return (
     <div className="space-y-2">
