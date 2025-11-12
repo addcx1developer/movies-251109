@@ -4,6 +4,7 @@ import { useNavigate, useOutletContext, useParams } from "react-router";
 import Input from "./form/Input";
 import Select from "./form/Select";
 import TextArea from "./form/TextArea";
+import Checkbox from "./form/Checkbox";
 
 function EditMovie() {
   const MPAA_OPTIONS = [
@@ -24,6 +25,8 @@ function EditMovie() {
     runtime: "",
     mpaa_rating: "",
     description: "",
+    genres: [],
+    genres_array: [Array(13).fill(false)],
   });
   const [formErrors, setFormErrors] = useState({
     general: null,
@@ -35,7 +38,44 @@ function EditMovie() {
       navigate("/login");
       return;
     }
-  }, [jwtToken, navigate]);
+
+    if ((id ?? 0) === 0) {
+      setMovie({
+        id: 0,
+        title: "",
+        release_date: "",
+        runtime: "",
+        mpaa_rating: "",
+        description: "",
+        genres: [],
+        genres_array: [Array(13).fill(false)],
+      });
+
+      const headers = new Headers();
+      headers.append("Content-Type", "application/json");
+
+      const requestOptions = {
+        method: "GET",
+        headers,
+      };
+
+      fetch(`/api/genres`, requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          const checks = [];
+          data.forEach((g) =>
+            checks.push({ id: g.id, genre: g.genre, checked: false }),
+          );
+          setMovie((m) => ({
+            ...m,
+            genres: checks,
+            genres_array: [],
+          }));
+        })
+        .catch((err) => console.log(err));
+      return;
+    }
+  }, [jwtToken, navigate, id]);
 
   const hasError = (key) => {
     return formErrors.fields.indexOf(key) !== -1;
@@ -52,6 +92,13 @@ function EditMovie() {
       ...pv,
       [name]: value,
     }));
+  };
+
+  const handleCheck = (e, i) => {
+    console.log("handleCheck called");
+    console.log("value in handleCheck:", e.target.value);
+    console.log("checked is", e.target.checked);
+    console.log("position is", i);
   };
 
   return (
@@ -112,6 +159,21 @@ function EditMovie() {
         />
         <hr className="border-gray-300" />
         <h3>Genres</h3>
+        {movie.genres && movie.genres.length > 0 && (
+          <>
+            {Array.from(movie.genres).map((g, i) => (
+              <Checkbox
+                key={i}
+                id={`genre-${i}`}
+                name="genre"
+                title={g.genre}
+                checked={movie.genres[i].checked}
+                value={g.id}
+                onChange={(e) => handleCheck(e, i)}
+              />
+            ))}
+          </>
+        )}
       </form>
     </div>
   );

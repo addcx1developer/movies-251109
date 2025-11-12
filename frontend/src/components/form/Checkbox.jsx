@@ -1,6 +1,6 @@
 function Checkbox(props) {
   return (
-    <div>
+    <div className="space-x-2">
       <input
         type="checkbox"
         id={props.name}
@@ -9,7 +9,9 @@ function Checkbox(props) {
         value={props.value}
         onChange={props.onChange}
       />
-      <label htmlFor={props.name}>{props.title}</label>
+      <label htmlFor={props.name} className="text-xs font-semibold">
+        {props.title}
+      </label>
     </div>
   );
 }
