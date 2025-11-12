@@ -83,6 +83,24 @@ function EditMovie() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    let errors = [];
+    let required = [
+      { field: movie.title, name: "title" },
+      { field: movie.release_date, name: "release_date" },
+      { field: movie.runtime, name: "runtime" },
+      { field: movie.description, name: "description" },
+      { field: movie.mpaa_rating, name: "mpaa_rating" },
+    ];
+
+    required.forEach((obj) => obj.field === "" && errors.push(obj.name));
+
+    setFormErrors((fe) => ({
+      ...fe,
+      fields: errors,
+    }));
+
+    if (formErrors.fields.length > 0) return;
   };
 
   const handleChange = (e) => {
@@ -193,6 +211,10 @@ function EditMovie() {
             ))}
           </>
         )}
+        <hr />
+        <button className="bg-blue-700 hover:bg-blue-600 text-white text-sm rounded-sm p-1 cursor-pointer transition duration-300 ease-in-out">
+          Save
+        </button>
       </form>
     </div>
   );
