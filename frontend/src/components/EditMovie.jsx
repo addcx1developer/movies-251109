@@ -94,11 +94,30 @@ function EditMovie() {
     }));
   };
 
-  const handleCheck = (e, i) => {
+  const handleCheck = (e, p) => {
     console.log("handleCheck called");
     console.log("value in handleCheck:", e.target.value);
     console.log("checked is", e.target.checked);
-    console.log("position is", i);
+    console.log("position is", p);
+
+    const genres = movie.genres.map((g, i) =>
+      i === p ? { ...g, checked: e.target.checked } : g,
+    );
+
+    let genres_array;
+    if (e.target.checked) {
+      genres_array = [...movie.genres_array, parseInt(e.target.value, 10)];
+    } else {
+      genres_array = movie.genres_array.filter(
+        (id) => id !== parseInt(e.target.value, 10),
+      );
+    }
+
+    setMovie((m) => ({
+      ...m,
+      genres,
+      genres_array,
+    }));
   };
 
   return (
@@ -165,7 +184,7 @@ function EditMovie() {
               <Checkbox
                 key={i}
                 id={`genre-${i}`}
-                name="genre"
+                name={`genre-${i}`}
                 title={g.genre}
                 checked={movie.genres[i].checked}
                 value={g.id}
