@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router";
+import { toast } from "react-toastify";
 
 import Input from "./form/Input";
 import Select from "./form/Select";
@@ -95,6 +96,11 @@ function EditMovie() {
 
     required.forEach((obj) => obj.field === "" && errors.push(obj.name));
 
+    if (movie.genres_array.length === 0) {
+      toast("You must choose at least one genre", { type: "error" });
+      errors.push("genres");
+    }
+
     setFormErrors((fe) => ({
       ...fe,
       fields: errors,
@@ -143,7 +149,7 @@ function EditMovie() {
       <h2 className="text-lg font-bold border-b border-gray-300 py-2">
         Add/Edit Movie
       </h2>
-      <pre>{JSON.stringify(movie, null, 3)}</pre>
+      {/* <pre>{JSON.stringify(movie, null, 3)}</pre> */}
       <form onSubmit={handleSubmit} className="space-y-4">
         <input type="hidden" id="id" name="id" value={movie.id} />
         <Input
