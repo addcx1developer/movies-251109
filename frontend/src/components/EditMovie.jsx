@@ -107,11 +107,51 @@ function EditMovie() {
     }));
 
     if (formErrors.fields.length > 0) return;
+
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", `Bearer ${jwtToken}`);
+
+    let method = "PUT";
+    if (movie.id > 0) {
+      method = "PATCH";
+    }
+
+    const payload = {
+      ...movie,
+      genres: movie.genres
+        .filter((g) => g.checked)
+        .map((g) => ({ id: g.id, genre: g.genre })),
+      release_date: movie.release_date + "T00:00:00Z",
+      runtime: parseInt(movie.runtime, 10),
+    };
+
+    const requestOptions = {
+      method,
+      headers,
+      body: JSON.stringify(payload),
+      credentials: "include",
+    };
+
+    fetch(`/api/admin/movies/${movie.id}`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          console.log(data.error);
+          return;
+        }
+        navigate(`/manage-catalogue`);
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleChange = (e) => {
     let value = e.target.value;
     let name = e.target.name;
+    setFormErrors((fe) => ({
+      ...fe,
+      fields: fe.fields.filter((f) => f !== name),
+    }));
     setMovie((pv) => ({
       ...pv,
       [name]: value,
