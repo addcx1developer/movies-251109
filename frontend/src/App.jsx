@@ -82,7 +82,7 @@ function App() {
   }, [jwtToken, toggleRefresh]);
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center mb-4">
       <div className="w-200 space-y-4">
         <header className="flex justify-between items-center py-4 border border-transparent border-b-gray-300">
           <h1 className="text-xl font-bold">Go Watch a Movie!</h1>

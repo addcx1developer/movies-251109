@@ -40,6 +40,9 @@ function EditMovie() {
       return;
     }
 
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
     if ((id ?? 0) === 0) {
       setMovie({
         id: 0,
@@ -51,9 +54,6 @@ function EditMovie() {
         genres: [],
         genres_array: [Array(13).fill(false)],
       });
-
-      const headers = new Headers();
-      headers.append("Content-Type", "application/json");
 
       const requestOptions = {
         method: "GET",
@@ -76,6 +76,39 @@ function EditMovie() {
         .catch((err) => console.log(err));
       return;
     }
+
+    headers.append("Authorization", `Bearer ${jwtToken}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers,
+    };
+
+    fetch(`/api/admin/movies/${id}`, requestOptions)
+      .then((response) => {
+        if (response.status !== 200) {
+          setFormErrors((fe) => ({
+            ...fe,
+            general: "Invalid response code: " + response.status,
+          }));
+          return;
+        }
+        return response.json();
+      })
+      .then((data) => {
+        data.movie.release_date = new Date(data.movie.release_date)
+          .toISOString()
+          .split("T")[0];
+        setMovie(data.movie);
+        data.genres.forEach((g) => {
+          g.checked = data.movie.genres_array.indexOf(g.id) !== -1;
+        });
+        setMovie((m) => ({
+          ...m,
+          genres: data.genres,
+        }));
+      })
+      .catch((err) => console.log(err));
   }, [jwtToken, navigate, id]);
 
   const hasError = (key) => {
@@ -184,6 +217,10 @@ function EditMovie() {
     }));
   };
 
+  if (formErrors.general) {
+    return <div>{formErrors.general}</div>;
+  }
+
   return (
     <div className="space-y-2">
       <h2 className="text-lg font-bold border-b border-gray-300 py-2">
@@ -226,6 +263,7 @@ function EditMovie() {
           name="mpaa_rating"
           title="MPAA Rating"
           options={MPAA_OPTIONS}
+          value={movie.mpaa_rating}
           onChange={handleChange}
           placeHolder="Choose..."
           errorDiv={hasError("mpaa_rating") ? "text-red-800" : "hidden"}
